@@ -1,0 +1,228 @@
+object configForm: TconfigForm
+  Left = 221
+  Top = 236
+  BorderStyle = bsDialog
+  Caption = 'Konfiguration'
+  ClientHeight = 391
+  ClientWidth = 576
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Position = poScreenCenter
+  OnCloseQuery = FormCloseQuery
+  PixelsPerInch = 120
+  object Label1: TLabel
+    Left = 32
+    Top = 344
+    Width = 234
+    Height = 16
+    Caption = 'Auflösung für Grafikexport (Clipb., Datei)'
+    FocusControl = edExportWidth
+  end
+  object Label2: TLabel
+    Left = 338
+    Top = 344
+    Width = 6
+    Height = 16
+    Caption = '&x'
+    FocusControl = edExportHeight
+  end
+  object Label3: TLabel
+    Left = 407
+    Top = 284
+    Width = 13
+    Height = 16
+    Caption = '°C'
+  end
+  object Label4: TLabel
+    Left = 407
+    Top = 312
+    Width = 22
+    Height = 16
+    Caption = 'mm'
+  end
+  object Label5: TLabel
+    Left = 407
+    Top = 344
+    Width = 29
+    Height = 16
+    Caption = 'Pixel'
+  end
+  object rgDupes: TRadioGroup
+    Left = 344
+    Top = 32
+    Width = 201
+    Height = 113
+    Caption = '&Doppelte Stationen'
+    ItemIndex = 0
+    Items.Strings = (
+      '&Automatisch löschen'
+      '&Nie löschen'
+      'Ben&utzer fragen'
+    )
+    TabOrder = 16
+  end
+  object rgOpen: TRadioGroup
+    Left = 344
+    Top = 154
+    Width = 201
+    Height = 113
+    Caption = 'Beim &Öffnen neuer Dateien'
+    ItemIndex = 2
+    Items.Strings = (
+      'Alte Stationen &vergessen'
+      'Alte Stationen &behalten'
+      'Benutzer &fragen'
+    )
+    TabOrder = 17
+  end
+  object btnOk: TButton
+    Left = 448
+    Top = 331
+    Width = 97
+    Height = 33
+    Caption = 'Fe&rtig'
+    Default = True
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object cbWarnNotSaved: TCheckBox
+    Left = 32
+    Top = 24
+    Width = 297
+    Height = 33
+    Caption = '&Warnung bei nichtgespeicherten Änderungen'
+    Checked = True
+    State = cbChecked
+    TabOrder = 1
+  end
+  object cbConfirmModify: TCheckBox
+    Left = 32
+    Top = 56
+    Width = 249
+    Height = 25
+    Caption = 'Nachfrage bei &Änderung einer Station'
+    Checked = True
+    State = cbChecked
+    TabOrder = 2
+  end
+  object cbAutoOpen: TCheckBox
+    Left = 32
+    Top = 144
+    Width = 297
+    Height = 17
+    Caption = '"Datei öffnen"  - Dialog bei &Programmstart'
+    Checked = True
+    State = cbChecked
+    TabOrder = 5
+  end
+  object cbConfirmAdd: TCheckBox
+    Left = 32
+    Top = 116
+    Width = 265
+    Height = 17
+    Caption = 'Nachfrage bei &Hinzufügen einer Station'
+    TabOrder = 4
+  end
+  object cbConfirmDelete: TCheckBox
+    Left = 32
+    Top = 88
+    Width = 249
+    Height = 17
+    Caption = 'Nachfrage bei &Löschen einer Station'
+    Checked = True
+    State = cbChecked
+    TabOrder = 3
+  end
+  object cbMakeBackups: TCheckBox
+    Left = 32
+    Top = 172
+    Width = 217
+    Height = 17
+    Caption = 'BA&K-Dateien anlegen'
+    Checked = True
+    State = cbChecked
+    TabOrder = 6
+  end
+  object edExportWidth: TEdit
+    Left = 280
+    Top = 342
+    Width = 49
+    Height = 24
+    TabOrder = 14
+    Text = '826'
+  end
+  object edExportHeight: TEdit
+    Left = 352
+    Top = 342
+    Width = 49
+    Height = 24
+    TabOrder = 15
+    Text = '570'
+  end
+  object cbSaveUnchanged: TCheckBox
+    Left = 32
+    Top = 200
+    Width = 305
+    Height = 17
+    Caption = 'Au&ch nicht geänderte Dateien speichern'
+    TabOrder = 7
+  end
+  object cbColorLabels: TCheckBox
+    Left = 32
+    Top = 228
+    Width = 273
+    Height = 17
+    Caption = '&Achsenbeschriftungen ebenfalls einfärben'
+    Checked = True
+    State = cbChecked
+    TabOrder = 8
+  end
+  object cbSolidRainLine: TCheckBox
+    Left = 32
+    Top = 256
+    Width = 297
+    Height = 17
+    Caption = 'Durchgezogene Linie bei Niederschlagskurve'
+    TabOrder = 9
+  end
+  object cbExtendTemp: TCheckBox
+    Left = 32
+    Top = 284
+    Width = 337
+    Height = 21
+    Caption = 'Unsichtbare Temperaturskala immer mindestens ab'
+    Checked = True
+    State = cbChecked
+    TabOrder = 10
+  end
+  object edExtendTemp: TEdit
+    Left = 368
+    Top = 282
+    Width = 33
+    Height = 24
+    TabOrder = 11
+    Text = '-30'
+  end
+  object edExtendRain: TEdit
+    Left = 368
+    Top = 312
+    Width = 33
+    Height = 24
+    TabOrder = 13
+    Text = '500'
+  end
+  object cbExtendRain: TCheckBox
+    Left = 32
+    Top = 314
+    Width = 313
+    Height = 17
+    Caption = 'Unsichbare Niederschlagsskala mindestens bis'
+    Checked = True
+    State = cbChecked
+    TabOrder = 12
+  end
+end
