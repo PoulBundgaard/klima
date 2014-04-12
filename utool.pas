@@ -1,8 +1,10 @@
 unit utool;
 
+{$MODE Delphi}
+
 interface
 
-const versionTag = 'Klima 0.9';
+const versionTag = 'Klima 1.0';
 
 function isInt(s:String):Boolean;
 
