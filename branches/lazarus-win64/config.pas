@@ -1,10 +1,12 @@
 unit config;
 
+{$MODE Delphi}
+
 interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, uTool, Mask;
+  StdCtrls, ExtCtrls, uTool;
 
 type
   TconfigForm = class(TForm)
@@ -12,8 +14,6 @@ type
     rgOpen: TRadioGroup;
     btnOk: TButton;
     cbWarnNotSaved: TCheckBox;
-    btnPrinterSetup: TButton;
-    PrinterSetupDialog: TPrinterSetupDialog;
     cbConfirmModify: TCheckBox;
     cbAutoOpen: TCheckBox;
     cbConfirmAdd: TCheckBox;
@@ -33,7 +33,6 @@ type
     cbExtendRain: TCheckBox;
     Label4: TLabel;
     Label5: TLabel;
-    procedure btnPrinterSetupClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private-Deklarationen }
@@ -46,12 +45,7 @@ var
 
 implementation
 
-{$R *.DFM}
-
-procedure TconfigForm.btnPrinterSetupClick(Sender: TObject);
-begin
-  printersetupdialog.execute;
-end;
+{$R *.lfm}
 
 
 

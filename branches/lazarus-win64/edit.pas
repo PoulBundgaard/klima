@@ -1,10 +1,12 @@
 unit edit;
 
+{$MODE Delphi}
+
 interface
 
 uses                                                         
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Grids, Mask;
+  StdCtrls, Grids{, Mask};
 
 type
   TeditForm = class(TForm)
@@ -30,7 +32,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TeditForm.stringGridKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
