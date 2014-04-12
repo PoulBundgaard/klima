@@ -1,5 +1,7 @@
 unit about;
 
+{$MODE Delphi}
+
 interface
 
 uses
@@ -23,15 +25,13 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TaboutForm.FormCreate(Sender: TObject);
 begin
   Caption := 'Über '+versionTag;
   Info.Caption := versiontag+' für Windows'#13+
-                  '© 1999 Tobias Thierer'#13+
-                  ''#13+
-                  'pHreaX (http://www.phreax.net)'#13;
+                  '© 1999-2011 Tobias Thierer';
   Info.Left := (width-info.width) div 2;
   btnOk.Left:=(width - btnOk.width) div 2;
 end;

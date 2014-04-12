@@ -1,12 +1,13 @@
 unit mainform;
 
+{$MODE Delphi}
+{$ALIGN OFF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ComCtrls, DualList, Mask, ToolEdit, ExtCtrls, Grids, OleCtrls,
-  vcfi, Spin, RXSpin, Menus, SpeedBar, ImgList, ToolWin, RxGrdCpt, ExtDlgs,
-  clipbrd, iniFiles, printers, Animate, Buttons, uTool;
+  Windows, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, ComCtrls, ExtCtrls, Grids, Spin, Menus,
+  clipbrd, iniFiles, printers, Buttons, uTool;
 
 const
       defaultSzX = 413; // > 0!
@@ -27,13 +28,13 @@ const
       keyEnter = #13;
       keyEsc = #27;
       Months : array[1..12] of String = ('Januar',
-               'Februar','M‰rz','April','Mai','Juni','Juli',
+               'Februar','M√§rz','April','Mai','Juni','Juli',
                'August','September','Oktober','November',
                'Dezember');
       Continents : array[1..6] of String = ('Afrika','Amerika',
                    'Antarktis','Asien','Australien','Europa');
 
-      convStrWIN = '‰ˆ¸ƒ÷‹ﬂ';
+      convStrWIN = '√§√∂√º√Ñ√ñ√ú√ü';
       convStrDOS = chr($84)+chr($94)+chr($81)+chr($8e)+chr($99)+chr($9a)+chr($e1);
 
 //      exportSizeX = 413; exportSizeY = 277;
@@ -51,7 +52,7 @@ type
              end;
 
   TConvDirection = (cdDosToWin, cdWinToDos);
-  TExportDest = (edFile, edClipboard, edPrinter);
+  TExportDest = (edFile, edClipboard);
 
   TKLIFile = File of TDataSet;
 
@@ -92,11 +93,8 @@ type
     cbColor: TCheckBox;
     cbShowName: TCheckBox;
     N2: TMenuItem;
-    Drucken1: TMenuItem;
-    Drucken2: TMenuItem;
     Stationhinzufgen1: TMenuItem;
     Stationlschen1: TMenuItem;
-    PrintDialog: TPrintDialog;
     edContinent: TEdit;
     Stationeditieren1: TMenuItem;
     edGridsize: TSpinEdit;
@@ -106,16 +104,11 @@ type
     Schrift1: TMenuItem;
     Schrift2: TMenuItem;
     FontDialog: TFontDialog;
-    N5: TMenuItem;
-    Datensatzdrucken1: TMenuItem;
-    AlledruckenText1: TMenuItem;
     tbEmpty2: TToolButton;
     Datensatz1: TMenuItem;
     btnNewFile: TSpeedButton;
     btnLoad: TSpeedButton;
     btnSave: TSpeedButton;
-    btnPrintOne: TSpeedButton;
-    btnPrintAll: TSpeedButton;
     btnAdd: TSpeedButton;
     btnRemove: TSpeedButton;
     btnEdit: TSpeedButton;
@@ -156,10 +149,7 @@ type
     procedure Speichernunter1Click(Sender: TObject);
     procedure Neu1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure Drucken2Click(Sender: TObject);
     procedure Schrift1Click(Sender: TObject);
-    procedure Datensatzdrucken1Click(Sender: TObject);
-    procedure AlledruckenText1Click(Sender: TObject);
     procedure Info1Click(Sender: TObject);
   private
     { Private-Deklarationen }
@@ -215,13 +205,10 @@ type
     procedure saveConfig;
     procedure loadConfig;
     procedure process(var data:TDataSet);
-//    procedure extractData;
-//    procedure checkModify(var key:Char);
     procedure checkForDupes;
     procedure saveData(filename:String);
     procedure executeSaveDataAsDialog;
     procedure genericSave;
-    procedure printDataToFile(data:TDataset; var f:System.Text);
   public
     { Public-Deklarationen }
   end;
@@ -238,14 +225,14 @@ implementation
 
 uses config, about, edit;
 
-{$R *.DFM}
+{$R *.lfm}
 
 
 function myStrToFloat(s:String):Real;
 var code:Integer;
     errorMsg:String;
 begin
-  errorMsg:='"'+s+'" ist keine g¸ltiger Flieﬂkommawert!';
+  errorMsg:='"'+s+'" ist keine g√ºltiger Flie√ükommawert!';
   val(s,result,code);
   if code<>0 then begin
     MessageDlg(errorMsg,mtError,[mbOk],0);
@@ -258,7 +245,7 @@ function myStrToInt(s:String):Integer;
 var code:Integer;
     errorMsg:String;
 begin
-  errorMsg:='"'+s+'" ist keine g¸ltige Ganzzahl!';
+  errorMsg:='"'+s+'" ist keine g√ºltige Ganzzahl!';
   val(s,result,code);
   if code<>0 then begin
     MessageDlg(errorMsg,mtError,[mbOk],0);
@@ -296,7 +283,7 @@ var i:Integer;
 begin
   caption:=versionTag;
   Application.Title := versionTag;
-  btnInfo.Hint:='‹ber '+versionTag;
+  btnInfo.Hint:='√úber '+versionTag;
   numDataSets := 0;
   numFilesOpen:=1;
   lastFilename:='';
@@ -309,8 +296,6 @@ begin
 
   DecimalSeparator := '.';
   stringGrid.col:=0; stringGrid.row:=0;
-//  dottedBitmap:=TBitmap.create;
-//  dottedBitmap.loadFromFile('dotted.bmp');
   for ch:=#0 to #255 do begin
     convTableDosToWin[ch]:=ch;
     convTableWinToDos[ch]:=ch;
@@ -342,7 +327,6 @@ begin
                or (configForm.rgOpen.itemIndex = 0)
                or (   (configForm.rgOpen.itemIndex = 2)
                    and(mrYes=MessageDlg('Alte Klimastationen vergessen?',mtConfirmation,[mbYes,mbNo],0))
-//                   and(idYes=MessageBox(0,'Alte Klimastationen vergessen?','Frage',4))
                   );
 end;
 
@@ -400,7 +384,7 @@ begin
     if onMainForm then begin
       stringGrid.cells[1,13]:=sAvgTemp;
       stringGrid.cells[2,13]:=FloatToStrF(sumRain/12,ffFixed,5,1);
-      stringGrid.cells[1,14]:=''; //FloatToStr(sumTemp);
+      stringGrid.cells[1,14]:='';
       stringGrid.cells[2,14]:=sSumRain;
 
       edHeight.Text:=sHeight;
@@ -461,7 +445,7 @@ var s:String;
 begin
   if numDataSets = 1
    then s:='Ein Datensatz'
-   else s:=intToStr(numDataSets)+' Datens‰tze';
+   else s:=intToStr(numDataSets)+' Datens√§tze';
   if not ((numFilesOpen=1) and (lastFileName='')) then begin
     s:=s+' aus ';
     if numFilesOpen=1
@@ -471,7 +455,7 @@ begin
   s:=s+' im Speicher';
   StatusBar.Panels[1].Text := s;
   if dataModified
-   then StatusBar.Panels[0].Text := 'Datens‰tze ver‰ndert'
+   then StatusBar.Panels[0].Text := 'Datens√§tze ver√§ndert'
    else StatusBar.Panels[0].Text := ''
 end;
 
@@ -488,7 +472,7 @@ begin
     closeFile(tmpf);
     if (not error) then begin
       if forgetOldData then begin
-        if remindSave('Daten wurden ge‰ndert. ƒnderungen speichern?') then begin
+        if remindSave('Daten wurden ge√§ndert. √Ñnderungen speichern?') then begin
           numDataSets:=0;
           cbStation.Items.Clear;
           numFilesOpen := 0;
@@ -497,9 +481,9 @@ begin
         else exit;  
       end
       else if (dataModified) and (numFilesOpen=1) and (numDatasets>0) then begin
-        if not remindSave('Wenn Sie Datens‰tze aus mehreren Dateien '
-                  +'laden, kˆnnen Sie diese hinterher nicht in '
-                  +'die verschiedenen Dateien zur¸ckschreiben. '
+        if not remindSave('Wenn Sie Datens√§tze aus mehreren Dateien '
+                  +'laden, k√∂nnen Sie diese hinterher nicht in '
+                  +'die verschiedenen Dateien zur√ºckschreiben. '
                   +'Wollen Sie nun die bisher geladenen Dateien speichern?')
         then  exit;
       end;
@@ -520,7 +504,7 @@ begin
     if error then begin
 //    numDatasets:=0;
 //    cbStation.Items.Clear;
-      messageBox(0,'Dies ist keine g¸ltige KLI Datei','Fehler',0);
+      messageBox(0,'Dies ist keine g√ºltige KLI Datei','Fehler',0);
     end
     else begin
       inc(numfilesopen);
@@ -554,12 +538,12 @@ var i,j,h:Integer;
 begin
   for ch:=#0 to #255 do begin
     table[ch]:=upcase(ch);
-    if table[ch] = 'ƒ' then table[ch] := 'A';
-    if table[ch] = '÷' then table[ch] := 'O';
-    if table[ch] = '‹' then table[ch] := 'U';
-    if table[ch] = '‰' then table[ch] := 'A';
-    if table[ch] = 'ˆ' then table[ch] := 'O';
-    if table[ch] = '¸' then table[ch] := 'U';
+    if table[ch] = '√Ñ' then table[ch] := 'A';
+    if table[ch] = '√ñ' then table[ch] := 'O';
+    if table[ch] = '√ú' then table[ch] := 'U';
+    if table[ch] = '√§' then table[ch] := 'A';
+    if table[ch] = '√∂' then table[ch] := 'O';
+    if table[ch] = '√º' then table[ch] := 'U';
   end;
   h:=1;
   repeat h:=3*h+1 until h > numDatasets;
@@ -621,7 +605,6 @@ begin
      if tmp < 50 then tmp:=tmp+10 else tmp:=tmp+100;
      segValY[numSegY]:=tmp;
   until tmp>=scaleEnd;//maxVal;
-//  Assert(tmp=scaleEnd{maxVal},' tmp <> scaleEnd in TKlimaForm.drawDiagram');
   zeroPosY:=szY-gap; hundredPosY:=gap; // damit der Compiler sich nicht beschwert
 
   for i:=0 to numSegY do begin
@@ -734,14 +717,14 @@ begin
     brush.color:=clWhite;
     fillRect(canvRect);
     drawBody(canvas,szx,szy);
-    { ‹berschrift }
-    s:=data.sHeight+' m   '+data.sAvgTemp+' ∞C   '+data.sSumRain+' mm';
+    { √úberschrift }
+    s:=data.sHeight+' m   '+data.sAvgTemp+' ¬∞C   '+data.sSumRain+' mm';
     extent:=textExtent(s);
     y1 :=gap - round(1.5*extent.cy){segPosY[numSegY]-2*extent.cy};
     if showName then textOut(interPos[1],y1,data.name);
     textOut(interPos[12]-extent.cx,y1,s);
     if (cbColor.Checked) and (configForm.cbColorLabels.checked) then Font.Color := clRed;
-    s:='∞C'; extent:=TextExtent(s);     textOut(gap-extent.cx-lLen,y1,s);
+    s:='¬∞C'; extent:=TextExtent(s);     textOut(gap-extent.cx-lLen,y1,s);
     if (cbColor.Checked) and (configForm.cbColorLabels.checked) then Font.Color := clBlue;
     s:='mm'; extent:=TextExtent(s);     textOut(szX-gap+lLen,y1,s);
 
@@ -838,12 +821,10 @@ begin
 end;
 
 procedure TKlimaForm.exportGraphic(destination:TExportDest);
-var bitmap:TBitmap; i:Integer;
-    resX, resY : Integer;
-    ratio : Real;
+var bitmap:TBitmap;
 begin
   if numDataSets = 0 then begin
-    messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0);
+    messageBox(0,'Es wurden keine Datens√§tze geladen.','Fehler',0);
     exit;
   end;
   bitmap:=TBitmap.create;
@@ -854,19 +835,6 @@ begin
   case destination of
     edFile: if BMPSaveDialog.execute then bitmap.saveToFile(bmpSaveDialog.fileName);
     edClipboard: clipboard.assign(bitmap);
-    edPrinter: if printdialog.execute
-                then for i:=1 to printdialog.copies
-                 do with printer do begin
-                     resX := printer.pageWidth; resY:=printer.pageHeight;
-                     ratio := exportSizeY / exportSizeX;
-                     if (resX*ratio > resY)
-                      then resX := round(resY / ratio)
-                      else resY := round(resX * ratio);
-                     title:='Klimadiagramm von '+dataSets[cbStation.itemIndex+1].name;
-                     BeginDoc;
-                     drawDiagram(printer.canvas,resX,resY,dataSets[cbStation.itemIndex+1],minTemp,maxRain div 2);
-                     EndDoc;
-                    end;
   end;
   bitmap.free;
 end;
@@ -1101,7 +1069,7 @@ end;
 function TKlimaForm.allowDataModification:Boolean;
  function askIfModify:Boolean;
  begin
-   askIfModify:=(mrYes=MessageDlg('Sollen die Stationsdaten wirklich ge‰ndert werden?',mtConfirmation,[mbYes,mbNo],0))
+   askIfModify:=(mrYes=MessageDlg('Sollen die Stationsdaten wirklich ge√§ndert werden?',mtConfirmation,[mbYes,mbNo],0))
  end;
 begin
   result := (not configForm.cbConfirmModify.checked)
@@ -1116,7 +1084,7 @@ end;
 procedure TKlimaForm.Stationeditieren1Click(Sender: TObject);
 begin
   if numDatasets=0
-   then  messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0)
+   then  messageBox(0,'Es wurden keine Datens√§tze geladen.','Fehler',0)
    else //if (dataModified) or(allowDataModification) then
     editDataSet(dataSets[cbStation.itemIndex+1],True);
 end;
@@ -1153,10 +1121,10 @@ var i :Integer;
 begin
   checkForDupes;
 //  sortDatasets; // In checkForDupes enthalten
-  backupname := cbStation.Items[cbStation.itemindex];
+//  backupname := cbStation.Items[cbStation.itemindex];
   cbStation.Items.Clear;
   for i:=1 to numDatasets do cbStation.Items.Add(datasets[i].name);
-  cbStation.itemIndex:=cbStation.Items.indexOf(backupName);
+ // cbStation.itemIndex:=cbStation.Items.indexOf(backupName);
   if (cbStation.itemIndex < 0) and (numdatasets>0) then cbStation.itemindex:=0;
 end;
 
@@ -1174,7 +1142,7 @@ begin
    then dupesExist:=True;
   if     (dupesExist)
      and (  (configForm.rgDupes.itemIndex=0)
-          or((idYes=MessageBox(0,'Doppelte Datens‰tze entdeckt. ‹berz‰hlige Datens‰tze lˆschen?','Frage',4))))
+          or((idYes=MessageBox(0,'Doppelte Datens√§tze entdeckt. √úberz√§hlige Datens√§tze l√∂schen?','Frage',4))))
   then begin
     pos:=1;
     dest:=1;
@@ -1194,7 +1162,7 @@ procedure TKlimaForm.Stationhinzufgen1Click(Sender: TObject);
 begin
   if (not configForm.cbConfirmAdd.checked)
 //      or dataModified
-      or (idYes=MessageBox(0,'Neue Station hinzuf¸gen?','Best‰tigung',4))
+      or (idYes=MessageBox(0,'Neue Station hinzuf√ºgen?','Best√§tigung',4))
   then begin
     inc(numdatasets);
     datasets[numdatasets]:=emptyDataset;
@@ -1209,11 +1177,11 @@ end;
 procedure TKlimaForm.Stationlschen1Click(Sender: TObject);
 begin
   if numDatasets=0
-   then  messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0)
+   then  messageBox(0,'Es wurden keine Datens√§tze geladen.','Fehler',0)
    else if (not configForm.cbConfirmDelete.checked)
    //      or dataModified
-           or(mrYes = MessageDlg('Datensatz wirklich lˆschen?',mtConfirmation,[mbYes,mbNo],0))
-//            or (idYes=MessageBox(0,'Datensatz wirklich lˆschen?','Best‰tigung',4))
+           or(mrYes = MessageDlg('Datensatz wirklich l√∂schen?',mtConfirmation,[mbYes,mbNo],0))
+//            or (idYes=MessageBox(0,'Datensatz wirklich l√∂schen?','Best√§tigung',4))
     then begin
       dataSets[cbStation.itemIndex+1]:=datasets[numdatasets];
       dec(numdatasets);
@@ -1274,37 +1242,13 @@ end;
 procedure TKlimaform.genericSave;
 begin
   if numDatasets=0
-   then messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0)
+   then messageBox(0,'Es wurden keine Datens√§tze geladen.','Fehler',0)
    else begin
      if (not configForm.cbSaveUnchanged.checked) and (not dataModified) then exit;
      if (numFilesOpen = 1)
       then saveData(lastFilename)
       else executeSaveDataAsDialog;
    end;
-end;
-
-procedure TKlimaForm.printDataToFile(data:TDataset; var f:System.Text);
-type TAlign = (alRight,alLeft);
-var i:Integer;
-  procedure prn(s:String; width:Integer; align:TAlign=alRight);
-  begin
-    case align of
-      alLeft : while length(s) < width do s:=s+' ';
-      alRight: while length(s) < width do s:=' '+s;
-    end;
-    write(f,s);
-  end;
-
-begin
-  printer.canvas.Font.name:='Courier New';
-  printer.canvas.Font.Size:=12;
-  with data do begin
-    writeln(f,name,', ',continents[continent-48],', ',sHeight,' m ¸ber NN');
-    write(f,'   '); for i:=1 to 12 do prn(months[i,1],5); writeln(f,'   Jahr');
-    write(f,'   '); for i:=1 to 12 do prn(sTemp[i]   ,5); prn(sAvgTemp,7); writeln(f,' ∞C');
-    write(f,'   '); for i:=1 to 12 do prn(sRain[i]   ,5); prn(sSumRain,7); writeln(f,' mm');
-    writeln(f);
-  end;
 end;
 
 procedure TKlimaForm.Speichern1Click(Sender: TObject);
@@ -1315,7 +1259,7 @@ end;
 procedure TKlimaForm.executeSaveDataAsDialog;
 begin
   if numDatasets=0
-   then  messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0)
+   then  messageBox(0,'Es wurden keine Datens√§tze geladen.','Fehler',0)
    else if KLISaveDialog.execute then saveData(KLISaveDialog.filename);
 end;
 
@@ -1345,7 +1289,7 @@ end;
 
 procedure TKlimaForm.Neu1Click(Sender: TObject);
 begin
-  if remindSave('Datens‰tze wurden ge‰ndert. ƒnderungen speichern?')
+  if remindSave('Datens√§tze wurden ge√§ndert. √Ñnderungen speichern?')
    then begin
      numDataSets:=0;
      numFilesOpen:=1;
@@ -1357,12 +1301,7 @@ end;
 
 procedure TKlimaForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  canClose := remindSave('Daten wurden ge‰ndert. ƒnderungen speichern?');
-end;
-
-procedure TKlimaForm.Drucken2Click(Sender: TObject);
-begin
-  exportGraphic(edPrinter);
+  canClose := remindSave('Daten wurden ge√§ndert. √Ñnderungen speichern?');
 end;
 
 procedure TKlimaForm.Schrift1Click(Sender: TObject);
@@ -1371,37 +1310,6 @@ begin
     drawFont := fontDialog.Font;
     updateDisplay;
   end;
-end;
-
-procedure TKlimaForm.Datensatzdrucken1Click(Sender: TObject);
-var f:System.Text;
-    i:Integer;
-begin
-  if numDatasets=0
-   then messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0)
-   else if printDialog.Execute then for i:=1 to printDialog.Copies do begin
-     Printer.Title:='Klimadaten von '+datasets[cbStation.itemIndex+1].Name;
-//   assignFile(f,'E:\print.out');
-     assignPrn(f);
-     rewrite(f);
-     printDataToFile(dataSets[cbStation.itemIndex+1],f);
-     System.Close(f); //   closeFile(f);
-   end;
-end;
-
-procedure TKlimaForm.AlledruckenText1Click(Sender: TObject);
-var f:System.Text;
-    i,j:Integer;
-begin
-  if numDatasets=0
-   then messageBox(0,'Es wurden keine Datens‰tze geladen.','Fehler',0)
-   else if printDialog.Execute then for i:=1 to printDialog.Copies do begin
-     Printer.Title:='Klimadatentabelle';
-     assignPrn(f);         //  assignFile(,'E:\print.out');
-     rewrite(f);
-     for j:=1 to numDataSets do printDataToFile(dataSets[j],f);
-     System.close(f);      //  closeFile(f);
-   end;
 end;
 
 procedure TKlimaForm.Info1Click(Sender: TObject);
