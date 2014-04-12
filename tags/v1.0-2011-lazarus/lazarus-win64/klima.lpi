@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="9">
+      <Unit0>
+        <Filename Value="klima.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="mainform.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="KlimaForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="mainform"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="597"/>
+        <CursorPos X="50" Y="609"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="config.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="config"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="5"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="17"/>
+        <CursorPos X="30" Y="17"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="edit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="edit"/>
+        <EditorIndex Value="7"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="26" Y="9"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="utool.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="utool"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="about.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="about"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\dev\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="4"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="3182"/>
+        <CursorPos X="1" Y="3192"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\dev\lazarus\lcl\interfaces\win32\win32listsl.inc"/>
+        <EditorIndex Value="6"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="162"/>
+        <CursorPos X="1" Y="172"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\dev\lazarus\lcl\include\customcombobox.inc"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="917"/>
+        <CursorPos X="1" Y="930"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit8>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="514" Column="1" TopLine="504"/>
+      </Position1>
+      <Position2>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="520" Column="1" TopLine="504"/>
+      </Position2>
+      <Position3>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="521" Column="1" TopLine="504"/>
+      </Position3>
+      <Position4>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="524" Column="1" TopLine="514"/>
+      </Position4>
+      <Position5>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1131" Column="1" TopLine="1121"/>
+      </Position5>
+      <Position6>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1132" Column="1" TopLine="1121"/>
+      </Position6>
+      <Position7>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1134" Column="1" TopLine="1121"/>
+      </Position7>
+      <Position8>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="524" Column="1" TopLine="514"/>
+      </Position8>
+      <Position9>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1134" Column="1" TopLine="1124"/>
+      </Position9>
+      <Position10>
+        <Filename Value="C:\dev\lazarus\lcl\include\customcombobox.inc"/>
+        <Caret Line="927" Column="1" TopLine="917"/>
+      </Position10>
+      <Position11>
+        <Filename Value="C:\dev\lazarus\lcl\include\customcombobox.inc"/>
+        <Caret Line="928" Column="1" TopLine="917"/>
+      </Position11>
+      <Position12>
+        <Filename Value="C:\dev\lazarus\lcl\include\customcombobox.inc"/>
+        <Caret Line="929" Column="1" TopLine="917"/>
+      </Position12>
+      <Position13>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1134" Column="80" TopLine="1126"/>
+      </Position13>
+      <Position14>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="524" Column="1" TopLine="514"/>
+      </Position14>
+      <Position15>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1137" Column="4" TopLine="1125"/>
+      </Position15>
+      <Position16>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="524" Column="1" TopLine="514"/>
+      </Position16>
+      <Position17>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1135" Column="1" TopLine="1125"/>
+      </Position17>
+      <Position18>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="524" Column="1" TopLine="514"/>
+      </Position18>
+      <Position19>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="1132" Column="68" TopLine="1125"/>
+      </Position19>
+      <Position20>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="524" Column="1" TopLine="250"/>
+      </Position20>
+      <Position21>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="731" Column="46" TopLine="731"/>
+      </Position21>
+      <Position22>
+        <Filename Value="C:\dev\lazarus\lcl\include\control.inc"/>
+        <Caret Line="13" Column="36" TopLine="1"/>
+      </Position22>
+      <Position23>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="731" Column="46" TopLine="659"/>
+      </Position23>
+      <Position24>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="8" Column="44" TopLine="1"/>
+      </Position24>
+      <Position25>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="605" Column="17" TopLine="588"/>
+      </Position25>
+      <Position26>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="612" Column="15" TopLine="596"/>
+      </Position26>
+      <Position27>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="613" Column="15" TopLine="596"/>
+      </Position27>
+      <Position28>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="615" Column="31" TopLine="598"/>
+      </Position28>
+      <Position29>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="616" Column="33" TopLine="599"/>
+      </Position29>
+      <Position30>
+        <Filename Value="mainform.pas"/>
+        <Caret Line="659" Column="18" TopLine="642"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
